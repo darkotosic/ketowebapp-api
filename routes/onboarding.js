@@ -25,8 +25,11 @@ router.post('/save', async (req, res) => {
 
         res.status(200).json({ success: true, user });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+        console.error('Backend error:', error.message);
+        if (error.meta) {
+            console.error('Meta:', error.meta);
+        }
+        res.status(500).json({ success: false, error: error.message });
     }
 });
 
